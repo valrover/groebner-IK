@@ -1,6 +1,6 @@
 # Inverse kinematics of a biped robot using Gröbner basis theory
 
-This document briefly outlines the forward kinematics for the right and left legs of a biped robot, providing the background of the polynomial equations used in the inverse kinematics computations. The polynomial equations are then fed into an algorithm that computes Gröbner bases using the graded reverse lexicographic order (grevlex) for the monomial ordering. The inverse kinematics is solved for the forward kineamtics of the left leg but the solutions can be reused due to Symmetry for the right leg if one accounts for the offset in the input.
+This document briefly outlines the forward kinematics for the right and left legs of a biped robot and provides the background on the polynomial equations used in the inverse kinematics computations. These polynomial equations are then processed by an algorithm that computes Gröbner bases using the graded reverse lexicographic order (grevlex) for monomial ordering. The inverse kinematics is solved based on the forward kinematics of the left leg, but the solutions can be reused for the right leg by accounting for the offset in the input due to symmetry.
 
 ### Homogeneous transformation matrices
 
@@ -58,7 +58,7 @@ p_{y} = -a_1\sin(\theta_{1}) - [a_2\cos(\theta_{2}) + a_3\cos(\theta_{2}+\theta_
 p_{z} = -d_1 + a_2\sin(\theta_{2}) + a_3\sin(\theta_{2}+\theta_{3}) - a_4\cos(\phi)
 ```
 
-#### Additional Equations for computing the gröbner bases
+#### Additional Equations for computing the Gröbner bases
 
 From the previous polynomials the following relationship can be obtained by simple algebraic manipulations without computers. This additional expression speeds up the computation of the gröbner bases, since it simplifies the polynomials by separating the first joint angles from the rest. This separation allows the algorithm to handle equations in smaller, decoupled sets, improving computational efficiency. This also makes sense because the first joint angles from each leg rotates about an axis that is not parallel to the rest of joint angles. The additional expression is the following:
 
@@ -68,7 +68,7 @@ a_2\cos(\theta_{2}) + a_3\cos(\theta_{2}+\theta_{3}) + a_4\sin(\phi) = \sqrt{(p_
 
 ### Trigonometric polynomial system of equations
 
-With the previous expressions from the forward kinematics it is possible to arrange the polynomials as a nonlinear system of equations, which are used a the input for the algorithms that compute the Gröbner bases. The system of equations is complemented with trigonometric identities to account for the trigonometric nature of the polynomials. Otherwise, the algorithm would treat them as ordinary polynomials.
+With the previous expressions from the forward kinematics it is possible to arrange the polynomials as a nonlinear system of equations, which are used as the input for the algorithms that compute the Gröbner bases. The system of equations is complemented with trigonometric identities to account for the trigonometric nature of the polynomials. Otherwise, the algorithm would treat them as ordinary polynomials.
 
 ```math
 \begin{split}
