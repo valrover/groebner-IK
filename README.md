@@ -16,7 +16,12 @@ Transformations between robot frames:
 ```
 
 ```math
-\mathbf{T}_{1}^{2}(\theta_{2}) = 
+\mathbf{T}_{1}^{2}(\theta_{2}) = \begin{bmatrix}
+    \cos(\theta_{2})&-\sin(\theta_{2})&0&a_2\cos(\theta_{2})\\
+    \sin(\theta_{2})&\cos(\theta_{2})&0&a_2\sin(\theta_{2})\\
+    0&0&1&0\\
+    0&0&0&1
+\end{bmatrix}
 ```
 
 ```math
@@ -29,7 +34,12 @@ Transformations between robot frames:
 ```
 
 ```math
-\mathbf{T}_{3}^{4}(\theta_{4}) = 
+\mathbf{T}_{3}^{4}(\theta_{4}) = \begin{bmatrix}
+    \cos(\theta_{4})&-\sin(\theta_{4})&0&a_4\cos(\theta_{4})\\
+    \sin(\theta_{4})&\cos(\theta_{4})&0&a_4\sin(\theta_{4})\\
+    0&0&1&0\\
+    0&0&0&1
+\end{bmatrix}
 ```
 
 ### Position of the end effectors
