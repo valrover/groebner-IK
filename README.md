@@ -7,29 +7,29 @@ This document briefly outlines the forward kinematics for the right and left leg
 Transformations between robot frames:
 
 ```math
-\mathbf{T}_{0}^{1L}(\theta_{1L}) = \begin{bmatrix}
-    \sin(\theta_{1L})&0&-\cos(\theta_{1L})&-a_0-a_1\cos(\theta_{1L})\\
-    -\cos(\theta_{1L})&0&-\sin(\theta_{1L})&-a_1\sin(\theta_{1L})\\
+\mathbf{T}_{0}^{1}(\theta_{1}) = \begin{bmatrix}
+    \sin(\theta_{1})&0&-\cos(\theta_{1})&-a_0-a_1\cos(\theta_{1})\\
+    -\cos(\theta_{1})&0&-\sin(\theta_{1})&-a_1\sin(\theta_{1})\\
     0&1&0&-d_1\\
     0&0&0&1
 \end{bmatrix}
 ```
 
 ```math
-\mathbf{T}_{1}^{2L}(\theta_{2L}) = \mathbf{T}_{1}^{2R}(\theta_{2L})
+\mathbf{T}_{1}^{2}(\theta_{2}) = 
 ```
 
 ```math
-\mathbf{T}_{2}^{3L}(\theta_{3L}) = \begin{bmatrix}
-    \sin(\theta_{3L})&\cos(\theta_{3L})&0&a_3\cos(\theta_{3L})\\
-    -\cos(\theta_{3L})&\sin(\theta_{3L})&0&a_3\sin(\theta_{3L})\\
+\mathbf{T}_{2}^{3}(\theta_{3}) = \begin{bmatrix}
+    \sin(\theta_{3})&\cos(\theta_{3})&0&a_3\cos(\theta_{3})\\
+    -\cos(\theta_{3})&\sin(\theta_{3})&0&a_3\sin(\theta_{3})\\
     0&0&1&0\\
     0&0&0&1
 \end{bmatrix}
 ```
 
 ```math
-\mathbf{T}_{3}^{4L}(\theta_{4L}) = \mathbf{T}_{1}^{4R}(\theta_{4L})
+\mathbf{T}_{3}^{4}(\theta_{4}) = 
 ```
 
 ### Position of the end effectors
@@ -37,15 +37,15 @@ Transformations between robot frames:
 The position of the end effector is represented by using the following trigonometric polynomials obtained by multiplying the previous transformation matrices and extracting the positions:
 
 ```math
-p_{xL} = -a_0 - a_1\cos(\theta_{1L}) + [a_2\cos(\theta_{2L}) + a_3\cos(\theta_{2L}+\theta_{3L}) + a_4\sin(\phi_L)]\sin(\theta_{1L})
+p_{x} = -a_0 - a_1\cos(\theta_{1}) + [a_2\cos(\theta_{2}) + a_3\cos(\theta_{2}+\theta_{3}) + a_4\sin(\phi)]\sin(\theta_{1})
 ```
 
 ```math
-p_{yL} = -a_1\sin(\theta_{1L}) - [a_2\cos(\theta_{2L}) + a_3\cos(\theta_{2L}+\theta_{3L}) + a_4\sin(\phi_L)]\cos(\theta_{1L})
+p_{y} = -a_1\sin(\theta_{1}) - [a_2\cos(\theta_{2}) + a_3\cos(\theta_{2}+\theta_{3}) + a_4\sin(\phi)]\cos(\theta_{1})
 ```
 
 ```math
-p_{zL} = -d_1 + a_2\sin(\theta_{2L}) + a_3\sin(\theta_{2L}+\theta_{3L}) - a_4\cos(\phi_L)
+p_{z} = -d_1 + a_2\sin(\theta_{2}) + a_3\sin(\theta_{2}+\theta_{3}) - a_4\cos(\phi)
 ```
 
 #### Additional Equations for computing the gröbner bases
@@ -53,7 +53,7 @@ p_{zL} = -d_1 + a_2\sin(\theta_{2L}) + a_3\sin(\theta_{2L}+\theta_{3L}) - a_4\co
 From the previous polynomials the following relationship can be obtained by simple algebraic manipulations without computers. This additional expression speeds up the computation of the gröbner bases, since it simplifies the polynomials by separating the first joint angles from the rest. This separation allows the algorithm to handle equations in smaller, decoupled sets, improving computational efficiency. This also makes sense because the first joint angles from each leg rotates about an axis that is not parallel to the rest of joint angles. The additional expression is the following:
 
 ```math
-a_2\cos(\theta_{2L}) + a_3\cos(\theta_{2L}+\theta_{3L}) + a_4\sin(\phi_L) = \sqrt{(p_{xL}+a_0)^2+p_{yL}^2-a_1^2}
+a_2\cos(\theta_{2}) + a_3\cos(\theta_{2}+\theta_{3}) + a_4\sin(\phi) = \sqrt{(p_{x}+a_0)^2+p_{y}^2-a_1^2}
 ```
 
 ### Trigonometric polynomial system of equations
@@ -62,17 +62,17 @@ With the previous expressions from the forward kinematics it is possible to arra
 
 ```math
 \begin{split}
-    I_{1L}=\Bigl\{&- a_0 - a_1C_{1L} + \sqrt{(p_{xL}+a_0)^2+p_{yL}^2-a_1^2)}S_{1L} - p_{xL}=0, \\
-    &a_1S_{1L} + \sqrt{(p_{xL}+a_0)^2+p_{yL}^2-a_1^2)}C_{1L} + p_{yL}=0\Bigr\}
+    I_{1}=\Bigl\{&- a_0 - a_1C_{1} + \sqrt{(p_{x}+a_0)^2+p_{y}^2-a_1^2)}S_{1} - p_{x}=0, \\
+    &a_1S_{1} + \sqrt{(p_{x}+a_0)^2+p_{y}^2-a_1^2)}C_{1} + p_{y}=0\Bigr\}
 \end{split}
 ```
 
 ```math
 \begin{split}
-    I_{2L}=\Bigl\{&\sqrt{(p_{xL}+a_0)^2+p_{yL}^2-a_1^2)} - a_2C_{2L} - a_3C_{23L} - a_4\sin(\phi_L)=0, \\
-    &- d_1 + a_2S_{2L} + a_3S_{23L} - a_4\cos(\phi_L) - p_{zL}=0, \\
-    &S_{2L}^2 + C_{2L}^2 - 1=0, \\
-    &S_{23L}^2 + C_{23L}^2 - 1=0\Bigr\}
+    I_{2}=\Bigl\{&\sqrt{(p_{x}+a_0)^2+p_{y}^2-a_1^2)} - a_2C_{2} - a_3C_{23} - a_4\sin(\phi)=0, \\
+    &- d_1 + a_2S_{2} + a_3S_{23} - a_4\cos(\phi) - p_{z}=0, \\
+    &S_{2}^2 + C_{2}^2 - 1=0, \\
+    &S_{23}^2 + C_{23}^2 - 1=0\Bigr\}
 \end{split}
 ```
 
