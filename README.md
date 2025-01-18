@@ -1,6 +1,6 @@
 # Inverse kinematics of a biped robot using Gröbner basis theory
 
-This document briefly outlines the forward kinematics of the leg of a biped robot and provides the background on the polynomial equations used in the inverse kinematics computations. These polynomial equations are then processed by an algorithm that computes Gröbner bases using the graded reverse lexicographic order (grevlex) for monomial ordering. The inverse kinematics is solved based on the forward kinematics of the left leg, but the solutions can be reused for the right leg by accounting for the offset in the input due to symmetry.
+This document briefly outlines the forward kinematics of the leg of a biped robot and provides the background on the polynomial equations used in the inverse kinematics computations. These polynomial equations are then processed by an algorithm that computes Gröbner bases using the graded reverse lexicographic order (grevlex) for monomial ordering. The inverse kinematics are solved based on the forward kinematics of the left leg, but the solutions can be reused for the right leg by accounting for the offset in the input due to symmetry.
 
 ### Homogeneous transformation matrices
 
